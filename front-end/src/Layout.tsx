@@ -1,17 +1,19 @@
-import { Outlet } from 'react-router-dom'
-
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Component/Navbar/Sidebar/Sidebar";
 const Layout = () => {
   return (
-    <div>
-      <header>Header</header>
+    <div className="flex">
 
-      <main>
-        <Outlet />
-      </main>
+     <Sidebar/>
 
-      <footer>Footer</footer>
+        <main className="container mx-auto">
+          <Outlet />
+        </main>
+
+      {/* <header className='bg-green-800'>Header</header> */}
+      {/* <footer>Footer</footer> */}
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
