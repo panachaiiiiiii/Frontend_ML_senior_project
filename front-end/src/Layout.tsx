@@ -1,17 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import Navbar from "./Component/Navbar/Navbar/Navbar";
 import Sidebar from "./Component/Navbar/Sidebar/Sidebar";
+
 const Layout = () => {
+  const location = useLocation();
+  const isSidebar = location.pathname === "/seting";
+
   return (
-    <div className="flex">
+    <div className={`medical-bg ${!isSidebar ? "min-h-screen " : "flex min-h-screen"}`}>
+      {!isSidebar ? (
+        <Navbar />
+      ) : (
+        <Sidebar />
+      )}
 
-     <Sidebar/>
-
-        <main className="container mx-auto">
-          <Outlet />
-        </main>
-
-      {/* <header className='bg-green-800'>Header</header> */}
-      {/* <footer>Footer</footer> */}
+      <main className="flex-1 container mx-auto p-4">
+        <Outlet />
+      </main>
     </div>
   );
 };

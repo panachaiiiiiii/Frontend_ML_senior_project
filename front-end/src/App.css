@@ -12,3 +12,22 @@
   --color-green-800: #2D8E71;
   --color-green-900: #147055;
 }
+.medical-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: url("../public/bg.png");
+  background-repeat: repeat;
+
+  /* ช่อง grid */
+background-size: 179px 104px;
+  /* ย่อไอคอน */
+  
+  
+
+
+  z-index: -10;
+  opacity: 0.08;
+  pointer-events: none;
+}

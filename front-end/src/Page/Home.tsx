@@ -1,11 +1,11 @@
 import React from 'react'
-
+import Tabbtn from '../Component/btns/Tabbtn';
 const Home = () => {
   return (
-    <div>
-      s
+    <div >
+      <Tabbtn label="Home"  muted={false} />
     </div>
   )
 }
 
-export default Home
+export default Home;
