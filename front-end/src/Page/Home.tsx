@@ -4,6 +4,7 @@ const Home = () => {
   return (
     <div >
       <Tabbtn label="Home"  muted={false} />
+      
     </div>
   )
 }

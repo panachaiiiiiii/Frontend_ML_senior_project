@@ -12,6 +12,9 @@
   --color-green-800: #2D8E71;
   --color-green-900: #147055;
 }
+.Buttoncustom {
+  @apply bg-green-800 hover:bg-green-600 focus:bg-green-900;
+}
 .medical-bg::before {
   content: "";
   position: absolute;

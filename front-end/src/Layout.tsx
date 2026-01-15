@@ -9,12 +9,12 @@ const Layout = () => {
   return (
     <div className={`medical-bg ${!isSidebar ? "min-h-screen " : "flex min-h-screen"}`}>
       {!isSidebar ? (
-        <Navbar />
+        <Navbar loggedIn={true} />
       ) : (
         <Sidebar />
       )}
 
-      <main className="flex-1 container mx-auto p-4">
+      <main className="mx-auto p-4 container ">
         <Outlet />
       </main>
     </div>
