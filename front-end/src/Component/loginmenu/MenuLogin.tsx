@@ -10,7 +10,7 @@ const MenuLogin = () => {
     const [show, setShow] = useState(false);
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   return (
-    <div className="w-[478px] h-[517px] bg-white border border-black rounded-lg flex flex-col items-center py-6 gap-4 mx-auto">
+    <div className="w-5/6 md:w-[478px] md:h-[517px] md:bg-white md:border border-black rounded-lg flex flex-col items-center py-6 gap-4 mx-auto">
       
       {/* Email */}
       <div className="w-[80%] flex flex-col gap-1">
@@ -18,7 +18,7 @@ const MenuLogin = () => {
         <input
           type="email"
           placeholder="Email"
-          className="h-12 rounded-xl border border-black px-4 outline-none focus:shadow-lg "
+          className="h-12 rounded-xl border bg-white border-black px-4 outline-none focus:shadow-lg "
         />
       </div>
 
@@ -28,7 +28,7 @@ const MenuLogin = () => {
         <input
           type={show ? "text" : "password"}
           placeholder="Password"
-          className="h-12 rounded-xl border border-black px-4 pr-10 outline-none focus:shadow-lg"
+          className="h-12 rounded-xl border bg-white  border-black px-4 pr-10 outline-none focus:shadow-lg"
         />
         <button
           type="button"
@@ -63,7 +63,7 @@ const MenuLogin = () => {
       {/* Register */}
       <div className="mt-2 text-sm">
         Don’t have an account?{" "}
-        <span onClick={()=>{}} className="text-red-500 cursor-pointer">Register</span>
+        <span onClick={() => window.location.href = Pagepath.register} className="text-red-500 cursor-pointer">Register</span>
       </div>
     </div>
   )

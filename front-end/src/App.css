@@ -13,24 +13,26 @@
   --color-green-900: #147055;
 }
 .Buttoncustom {
-  @apply bg-green-800 hover:bg-green-600 focus:bg-green-900;
+  @apply bg-green-800 hover:bg-green-600 focus:bg-green-900 px-8 py-2 rounded-md  text-white cursor-pointer hover:shadow-lg  
 }
+.medical-bg {
+  position: relative;
+}
+
 .medical-bg::before {
   content: "";
   position: absolute;
-  inset: 0;
-
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
   background-image: url("../public/bg.png");
   background-repeat: repeat;
-
-  /* ช่อง grid */
-background-size: 179px 104px;
-  /* ย่อไอคอน */
-  
-  
-
-
-  z-index: -10;
+  background-size: 179px 104px;
   opacity: 0.08;
+  z-index: -1;
   pointer-events: none;
 }
+
+

@@ -1,50 +1,58 @@
-
 import React from "react";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 type ListItemProps = {
   label: string;
-  active?: boolean;
+  onClick?: () => void;
   muted?: boolean;
 };
-const Tabbtn = ({ label, muted }: ListItemProps) => {
+
+const Tabbtn = ({ label, muted, onClick }: ListItemProps) => {
   return (
     <div
-    tabIndex={0}
+      role="button"
+      tabIndex={muted ? -1 : 0}
+      onClick={() => {
+        if (!muted) {
+          onClick?.();
+        }
+      }}
       className={`
         group
         flex items-center justify-between
-         w-5/12 h-[45px] md:w-[359px] md:h-[64px]
+        w-full
+        h-[45px] md:h-[64px]
         bg-white rounded-md
         shadow-md
         overflow-hidden
-        cursor-pointer
+        ${muted ? "cursor-default" : "cursor-pointer"}
         transition
-        hover:shadow-lg 
-
+        hover:shadow-lg
+        select-none
       `}
     >
-      {/* Green left bar */}
+      {/* Green bar */}
       <div className="w-[8px] h-full bg-green-700" />
 
-      {/* Content */}
-      <div className="flex-1 px-4 ">
+      <div className="flex-1 px-4">
         <span
-          className={`
-            text-sm md:text-lg font-medium 
-            ${muted ? "text-gray-400" : "text-gray-800 group-hover:text-green-600 group-focus:text-green-800"}
+          className={`text-sm md:text-lg font-medium
+            ${muted
+              ? "text-gray-400"
+              : "text-gray-800 group-hover:text-green-600"}
           `}
         >
           {label}
         </span>
       </div>
 
-      {/* Right arrow */}
-      <div className="pr-4 text-gray-800 group-hover:text-green-600 group-focus:text-green-800">
-        <CaretRightOutlined />
-      </div>
+      {!muted && (
+        <div className="pr-4 text-gray-800 group-hover:text-green-600">
+          <CaretRightOutlined />
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Tabbtn
+export default Tabbtn;

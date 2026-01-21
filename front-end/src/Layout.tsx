@@ -1,20 +1,26 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Component/Navbar/Navbar/Navbar";
 import Sidebar from "./Component/Navbar/Sidebar/Sidebar";
+import { Pagepath } from "./Page";
+import MobileNav from "./Component/Navbar/NavbarMoblie/MobileNav";
 
 const Layout = () => {
   const location = useLocation();
-  const isSidebar = location.pathname === "/seting";
+  const isSidebar = location.pathname === Pagepath.settings;
 
   return (
     <div className={`medical-bg ${!isSidebar ? "min-h-screen " : "flex min-h-screen"}`}>
-      {!isSidebar ? (
-        <Navbar loggedIn={true} />
-      ) : (
-        <Sidebar />
-      )}
+  {/* Desktop */}
+  <div className="hidden sm:block">
+    {!isSidebar ? <Navbar loggedIn /> : <Sidebar />}
+  </div>
 
-      <main className="mx-auto p-4 container ">
+  {/* Mobile */}
+  <div className="block sm:hidden">
+    <MobileNav />
+  </div>
+
+      <main className="mx-auto p-4 container">
         <Outlet />
       </main>
     </div>

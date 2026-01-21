@@ -1,12 +1,13 @@
 import React from 'react'
 interface btnProps {
     text: string;
-    href: string;
+    href?: string;
+    onClick?: ()=>void;
 }
-const btn = (props: btnProps) => {
+const Btn = (props: btnProps) => {
   return (
-    <button className='px-8 py-2 rounded-md Buttoncustom text-white cursor-pointer hover:shadow-lg  '><a href={props.href}>{props.text}</a></button>
+    <button type="button" onClick={props.onClick} className='Buttoncustom'><a href={props.href}>{props.text}</a></button>
   )
 }
 
-export default btn
+export default Btn

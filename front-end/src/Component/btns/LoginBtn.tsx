@@ -17,7 +17,7 @@ const LoginBtn = (props: LoginBtnProps) => {
     },
   });
   return (
-    <button onClick={() => login()} className="hover:shadow-lg  w-[241px] h-16 rounded-full border-[2px] border-green-500 flex items-center justify-center gap-3 hover:bg-green-200 focus:bg-green-400 cursor-pointer ">
+    <button onClick={() => login()} className="bg-white hover:shadow-lg  w-[241px] h-16 rounded-full border-[2px] border-green-500 flex items-center justify-center gap-3 hover:bg-green-200 focus:bg-green-400 cursor-pointer ">
 
         {props.imgSrc && <img src={props.imgSrc} className="w-5" />}
         {props.label}
