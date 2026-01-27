@@ -13,9 +13,31 @@ const LoginBtn = (props: LoginBtnProps) => {
     const navigate = useNavigate();
     const login = useGoogleLogin({
     onSuccess: tokenResponse => {
-      console.log(tokenResponse.access_token);
+      
+      handleSuccess(tokenResponse.access_token);
     },
   });
+
+   const handleSuccess = async (accessToken: string) => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        access_token: accessToken
+      })
+    });
+
+    const data = await response.json();
+    console.log("Backend Response:", data);
+
+  } catch (error) {
+    console.error("Send token error:", error);
+  }
+};
+  
   return (
     <button onClick={() => login()} className="bg-white hover:shadow-lg  w-[241px] h-16 rounded-full border-[2px] border-green-500 flex items-center justify-center gap-3 hover:bg-green-200 focus:bg-green-400 cursor-pointer ">
 

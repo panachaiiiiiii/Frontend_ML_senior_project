@@ -53,7 +53,7 @@ const MenuLogin = () => {
       </div>
 
       {/* Google */}
-      <LoginBtn  label="Continue with Google" href={Pagepath.login} imgSrc="https://www.svgrepo.com/show/475656/google-color.svg"/>
+      <LoginBtn  label="Continue with Google" imgSrc="https://www.svgrepo.com/show/475656/google-color.svg"/>
       
 
       {/* Guest */}
