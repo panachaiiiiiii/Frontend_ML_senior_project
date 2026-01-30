@@ -28,6 +28,9 @@ const App = () => {
       <Route path={Page.Pagepath.inspect} element={<Layout />}>
         <Route index element={<Page.Inspect />} />
       </Route>
+      <Route path={Page.Pagepath.setupprofile} element={<Layout />}>
+        <Route index element={<Page.SetupProfile />} />
+      </Route>
     </Routes>
   )
 }

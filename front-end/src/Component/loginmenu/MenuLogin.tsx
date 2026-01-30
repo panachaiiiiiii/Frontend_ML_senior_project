@@ -3,12 +3,12 @@ import Btn from "../../Component/btns/Btn";
 import LoginBtn from "../../Component/btns/LoginBtn";
 import {Pagepath} from "../../Page/index"
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { useGoogleLogin } from '@react-oauth/google';
+
 
 
 const MenuLogin = () => {
     const [show, setShow] = useState(false);
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+   
   return (
     <div className="w-5/6 md:w-[478px] md:h-[517px] md:bg-white md:border border-black rounded-lg flex flex-col items-center py-6 gap-4 mx-auto">
       
