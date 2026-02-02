@@ -18,23 +18,22 @@ const LoginBtn = (props: LoginBtnProps) => {
     try {
       const response = await fetch(PagepathAPI.LoginWithGoogle, {
         method: "POST",
+        
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          access_token: accessToken,
-        }),
+         body: JSON.stringify({
+           access_token: accessToken,
+         }),
       });
 
       const data = await response.json();
       if (data.status === 201 ) {
-        sessionStorage.setItem("uid", data.uid);
-        console.log("Saved Session:", data.user);
+        sessionStorage.setItem("Token", data.token)
         window.location.href = Pagepath.setupprofile;
                
       } else {
-        sessionStorage.setItem("uid", data.uid);
-        console.log("Saved Session:", data.user);
+        sessionStorage.setItem("Token", data.token);
         window.location.href = Pagepath.home;
       }
     } catch (error) {

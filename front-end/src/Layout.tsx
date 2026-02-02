@@ -4,15 +4,20 @@ import Sidebar from "./Component/Navbar/Sidebar/Sidebar";
 import { Pagepath } from "./Page";
 import MobileNav from "./Component/Navbar/NavbarMoblie/MobileNav";
 
+
 const Layout = () => {
   const location = useLocation();
   const isSidebar = location.pathname === Pagepath.settings;
-
+  const guest = sessionStorage.getItem("Guest");
   return (
     <div className={`medical-bg ${!isSidebar ? "min-h-screen " : "flex min-h-screen"}`}>
+      
   {/* Desktop */}
   <div className="hidden sm:block">
-    {!isSidebar ? <Navbar loggedIn /> : <Sidebar />}
+    {
+    location.pathname === Pagepath.login||location.pathname === Pagepath.register||location.pathname === Pagepath.setupprofile?<></>:!isSidebar ? <Navbar loggedIn={!guest?true:false}/> : <Sidebar />
+    
+    }
   </div>
 
   {/* Mobile */}

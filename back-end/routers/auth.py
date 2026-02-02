@@ -1,39 +1,48 @@
-from fastapi import APIRouter, Request
-from services.google_auth import verify_google_token
+from fastapi import APIRouter
 from database.firebase import get_db
+from jose import jwt,JWTError
+from datetime import datetime, timedelta,date
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from dotenv import load_dotenv
+import os
+from pydantic import BaseModel
 
+load_dotenv()
 
 router = APIRouter()
 db = get_db()
+security = HTTPBearer()
 
-@router.post("/login/google")
-async def login(request: Request):
-    body = await request.json()
-    access_token = body.get("access_token")
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+class Userinfo(BaseModel):
+    uid : str
+    email: str
+    first_name : str
+    last_name : str
+    sex : str
+    role: str
+    birthday : date
+class Token(BaseModel):
+    token:str
 
-    user_info = verify_google_token(access_token)
-    uid = user_info["sub"]
-    user_ref = db.reference(f"users/{uid}")
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(payload)
+        return payload
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
     
-    user = user_ref.get()
-    print(user)
-    if not user_ref.get():
-        user_ref.set({
-            "email": user_info["email"],
-            "role": "user",
-            "login_from": "google",
-            
-        })
-        return {
-            "uid": uid,
-            "status": 201
-        }
-    if user and "birthday" and "sex" in user:
-        return {
-            "uid": uid,
-            "status": 200
-        }
-    return {
-        "uid": uid,
-        "status": 201
-    }
+def create_token(data: dict):
+    payload = data.copy()
+    payload["exp"] = datetime.utcnow() + timedelta(hours=1)
+    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    return token
+
+
+@router.get("/userinfo")
+def userinfo(user: dict = Depends(verify_token)):
+    return {"user": user}

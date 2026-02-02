@@ -3,6 +3,7 @@ import Btn from "../../Component/btns/Btn";
 import LoginBtn from "../../Component/btns/LoginBtn";
 import {Pagepath} from "../../Page/index"
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import GuestBtn from '../btns/GuestBtn';
 
 
 
@@ -57,7 +58,7 @@ const MenuLogin = () => {
       
 
       {/* Guest */}
-      <LoginBtn  label="Continue with Guest" href={Pagepath.login} />
+      <GuestBtn  label="Continue with Guest" href={Pagepath.login} />
 
 
       {/* Register */}

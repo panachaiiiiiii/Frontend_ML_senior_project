@@ -13,11 +13,10 @@ interface NavbarProps {
 }
 
 function Navbar({ loggedIn }: NavbarProps) {
-   loggedIn = false;
   return (
     <nav className="h-16 w-screen bg-green-600 text-white py-4 px-20 flex items-center justify-between ">
       <h1>
-        <HomeOutlined className="text-3xl" />
+        <a className="cursor-pointer" href={Page.Pagepath.home}><HomeOutlined className="text-3xl" /></a>
       </h1>
       <div className="flex space-x-3">
         <a href="#">คัดกรองโรค</a>
@@ -27,15 +26,15 @@ function Navbar({ loggedIn }: NavbarProps) {
         {loggedIn ? (
           <div className="flex space-x-4">
             <div>
-              <SettingOutlined className="text-3xl" />
+              <a className="cursor-pointer" href={Page.Pagepath.settings}><SettingOutlined className="text-3xl" /></a>
             </div>
             <div>
-              <LogoutOutlined className="text-3xl" />
+              <button className="cursor-pointer" onClick={()=>{sessionStorage.clear()}}><a href={Page.Pagepath.login}><LogoutOutlined className="text-3xl" /></a></button>
             </div>
           </div>
         ) : (
           <div>
-            <a href={Page.Pagepath.login}><LoginOutlined className="text-3xl" /></a>
+            <button className="cursor-pointer" onClick={()=>{sessionStorage.clear()}}><a href={Page.Pagepath.login}><LogoutOutlined className="text-3xl" /></a></button>
           </div>
         )}
       </div>

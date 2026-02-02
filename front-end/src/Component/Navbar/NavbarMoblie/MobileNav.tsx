@@ -3,25 +3,27 @@ import {
   PictureOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { Pagepath } from "../../../Page";
 
 const MobileNav = () => {
+  
   return (
 <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
       {/* Bottom Bar */}
       <div className="relative h-16 bg-emerald-500 flex items-center justify-between px-10">
         
         {/* Home */}
-        <button className="text-white">
+        <a className="text-white" href={Pagepath.home}>
           <HomeOutlined className="text-[26px]" />
-        </button>
+        </a>
 
         {/* Spacer */}
         <div className="w-12" />
 
         {/* Profile */}
-        <button className="text-white">
+        <a className="text-white" href={Pagepath.settings}>
           <UserOutlined className="text-[26px]" />
-        </button>
+        </a>
 
         {/* Center Floating Button */}
         <button

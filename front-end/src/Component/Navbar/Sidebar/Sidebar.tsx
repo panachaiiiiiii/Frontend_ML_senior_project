@@ -18,9 +18,9 @@ const Sidebar = () => {
       </div>
       {/* ดัน logout ลงล่าง แต่ยังอยู่ใน 1 จอ */}
       <div className="mt-auto text-center pb-6">
-        <BtnSidebar href="/logout" label="ออกจากระบบ" />
+        <button onClick={()=>{sessionStorage.clear()}} ><BtnSidebar href="/login"  label="ออกจากระบบ" /></button>
       </div>
-
+    
     </aside>
   );
 };
