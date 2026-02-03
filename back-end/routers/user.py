@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 from firebase_admin import auth
 from fastapi import HTTPException
 from fastapi import Depends
-
+from typing import Dict
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -103,14 +103,23 @@ def setupuser(
         ref.update({
             "first_name": Userinfo.first_name,
             "last_name": Userinfo.last_name,
-            "birthday": Userinfo.birthday.isoformat(),
+            "birthday": Userinfo.birthday,
             "sex": Userinfo.sex
         })
         return {"status": 202}
 
     return {"status": 200}
 
-
+@router.get("/setting")
+def getdata(user = Depends(verify_token)):
+    ref = db.reference(f"/users/{user['uid']}")
+    
+    if ref.get():
+        return{
+            "user":ref.get(),
+            "status":202
+        }
+    return{"status":400}
 
 
 @router.get("/guest")
@@ -120,3 +129,23 @@ def LoginGuest():
             "token": token,
             "status": 200
         }
+
+@router.put("/setting")
+def update_profile(
+    data: Dict,
+    user = Depends(verify_token)
+):
+    uid = user["uid"]
+
+    ref = db.reference(f"/users/{uid}")
+
+    if not ref.get():
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # update เฉพาะ field ที่ส่งมา
+    ref.update(data)
+
+    return {
+        "status": 201,
+        "detail": "updated"
+    }

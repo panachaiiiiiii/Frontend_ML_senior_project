@@ -43,6 +43,3 @@ def create_token(data: dict):
     return token
 
 
-@router.get("/userinfo")
-def userinfo(user: dict = Depends(verify_token)):
-    return {"user": user}

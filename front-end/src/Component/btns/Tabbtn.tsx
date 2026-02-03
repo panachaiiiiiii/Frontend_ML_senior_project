@@ -42,7 +42,7 @@ const Tabbtn = ({ label, muted, onClick }: ListItemProps) => {
               : "text-gray-800 group-hover:text-green-600"}
           `}
         >
-          {label}
+          {String(label)}
         </span>
       </div>
 

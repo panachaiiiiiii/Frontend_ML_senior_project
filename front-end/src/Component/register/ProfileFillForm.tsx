@@ -10,14 +10,6 @@ const ProfileFillForm = () => {
   const Token = sessionStorage.getItem("Token");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = {
-      firstName,
-      lastName,
-      gender,
-      dob,
-    };
-
     sendData()
     // 👉 ส่ง API / เก็บ DB / ไปหน้าถัดไป
   };
