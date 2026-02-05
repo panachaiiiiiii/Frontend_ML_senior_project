@@ -7,6 +7,7 @@ type ModalProps = {
   value: string;
   setValue: (v: string) => void;
   label: string;
+  onSuccess: () => void; // ✅ เพิ่ม
 };
 const Token = sessionStorage.getItem("Token");
 const UpdateUserProfile = async (labels: string, value: string) => {
@@ -18,28 +19,35 @@ const UpdateUserProfile = async (labels: string, value: string) => {
         Authorization: `Bearer ${Token}`,
       },
       body: JSON.stringify({
-        [labels]: value,   // ✅ แก้ตรงนี้
+        [labels]: value,
       }),
     });
 
     const data = await res.json();
 
-    if (data.status === 400) {
-      alert(data.detail || "ไม่พบผู้ใช้");
-      return;
+    if (!res.ok) {
+      alert(data.detail || "เกิดข้อผิดพลาด");
+      return false;
     }
 
-    if (data.status === 201) {
-      alert("บันทึกสำเร็จ");
-      return;
-    }
+    alert("บันทึกสำเร็จ");
+    return true;
   } catch (err) {
     console.error(err);
     alert("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้");
+    return false;
   }
 };
 
-const Modal = ({keys, value, setValue, open, onClose, label }: ModalProps) => {
+const Modal = ({
+  keys,
+  value,
+  setValue,
+  open,
+  onClose,
+  label,
+  onSuccess,
+}: ModalProps) => {
   if (!open) return null;
 
   return (
@@ -78,12 +86,12 @@ const Modal = ({keys, value, setValue, open, onClose, label }: ModalProps) => {
         <div className="mt-4 flex justify-evenly">
           <button
             className="h-10 w-1/3 rounded-md bg-green-600 text-white hover:bg-green-700"
-            onClick={() => {
-              
-              UpdateUserProfile(keys,value);
-              onClose();
-              
-              
+            onClick={async () => {
+              const success = await UpdateUserProfile(keys, value);
+              if (success) {
+                onSuccess(); // 🔥 ดึงข้อมูลใหม่จาก parent
+                onClose();
+              }
             }}
           >
             ยืนยัน
@@ -91,7 +99,7 @@ const Modal = ({keys, value, setValue, open, onClose, label }: ModalProps) => {
 
           <button
             className="h-10 w-1/3 rounded-md bg-gray-300 text-white hover:bg-gray-400"
-            onClick={onClose}
+            onClick={() => onClose()}
           >
             ยกเลิก
           </button>

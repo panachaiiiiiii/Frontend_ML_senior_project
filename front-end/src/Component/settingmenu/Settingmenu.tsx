@@ -73,6 +73,7 @@ const Settingmenu = () => {
           onClose={() => {
             setOpen(false);
           }}
+          onSuccess={GetUserProfile} // ✅ เพิ่ม
         />
 
         <Tabbtn
@@ -99,7 +100,7 @@ const Settingmenu = () => {
             setLabel("เพศ");
             setvalue(Gender || "-");
             setOpen(true);
-            setkey("sex")
+            setkey("sex");
           }}
         />
       </div>

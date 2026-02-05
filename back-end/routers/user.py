@@ -103,7 +103,7 @@ def setupuser(
         ref.update({
             "first_name": Userinfo.first_name,
             "last_name": Userinfo.last_name,
-            "birthday": Userinfo.birthday,
+            "birthday": Userinfo.birthday.isoformat(),
             "sex": Userinfo.sex
         })
         return {"status": 202}

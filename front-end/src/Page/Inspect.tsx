@@ -29,6 +29,7 @@ const Inspect = () => {
         <div className="flex flex-col">
 
           {/* Content */}
+          
           <div className=" flex flex-col items-center text-center gap-6 text-lg">
             {preview ?<img
                   src={preview}
@@ -36,6 +37,7 @@ const Inspect = () => {
                   className="w-full h-96 rounded-xl object-cover border-2 border-green-600"
                 />:"No image selected"}
             {/* Upload button */}
+            <div className="flex gap-4">
             <Btn
               text="อัปโหลดรูปภาพ"
               onClick={() => {
@@ -43,7 +45,10 @@ const Inspect = () => {
   fileRef.current?.click();
 }}
             />
-
+              <div className={preview?"block":"hidden"}>
+              <Btn text="ยืนยัน" onClick={()=>{}} />
+              </div>
+            </div>
             {/* Example images */}
             <div className="flex gap-4 mt-2 ">
               {["/ex1.jpg", "/ex1.jpg", "/ex1.jpg"].map((src, i) => (

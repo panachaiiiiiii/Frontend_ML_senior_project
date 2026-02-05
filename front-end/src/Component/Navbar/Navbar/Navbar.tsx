@@ -19,8 +19,8 @@ function Navbar({ loggedIn }: NavbarProps) {
         <a className="cursor-pointer" href={Page.Pagepath.home}><HomeOutlined className="text-3xl" /></a>
       </h1>
       <div className="flex space-x-3">
-        <a href="#">คัดกรองโรค</a>
-        {loggedIn ? <a href="#">ประวัติการคัดกรอง</a> : null}
+        <a href={Page.Pagepath.inspect}>คัดกรองโรค</a>
+        {loggedIn ? <a href={Page.Pagepath.history}>ประวัติการคัดกรอง</a> : null}
       </div>
       <div className="flex space-x-3">
         {loggedIn ? (
