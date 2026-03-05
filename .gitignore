@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+<<<<<<<< HEAD:.gitignore
+=======
+>>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a
 # Logs
 logs
 *.log
@@ -22,6 +26,14 @@ firebase_key
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 firebase_key*
 serviceAccountKey*
 .env
+========
+>>>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a:back-end/.gitignore
+=======
+firebase_key.json
+serviceAccountKey.json
+.env
+>>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a

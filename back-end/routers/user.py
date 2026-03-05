@@ -1,52 +1,58 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, HTTPException
 from database.firebase import get_db
 from pydantic import BaseModel
-
 from datetime import date
-from .auth import create_token ,verify_token
-
+from .auth import create_token, verify_token
 from firebase_admin import auth
-from fastapi import HTTPException
-from fastapi import Depends
-from typing import Dict
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import HTTPException
-security = HTTPBearer()
+from typing import Optional
 
 router = APIRouter()
 db = get_db()
+
+
 class UpdateUser(BaseModel):
-    email: str | None = None
-    first_name: str | None = None
-    last_name: str | None = None
-    sex: str | None = None
-    birthday: str | None = None
-    role: str | None = None
+    email: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    sex: Optional[str] = None
+    birthday: Optional[str] = None
+    role: Optional[str] = None
+
+
 class Userinfo(BaseModel):
-    first_name : str
-    last_name : str
-    sex : str
-    birthday : date
+    first_name: str
+    last_name: str
+    sex: str
+    birthday: date
 
 
+# =========================
+# GET USER PROFILE
+# =========================
 @router.get("/setting")
-def getdata(user = Depends(verify_token)):
-    ref = db.reference(f"/users/{user['uid']}")
-    
-    if ref.get():
-        return{
-            "user":ref.get(),
-            "status":202
-        }
-    return{"status":400}
+def getdata(user=Depends(verify_token)):
 
+    ref = db.reference(f"/users/{user['uid']}")
+    data = ref.get()
+
+    if data:
+        return {
+            "user": data,
+            "status": 202
+        }
+
+    return {"status": 400}
+
+
+# =========================
+# DELETE USER
+# =========================
 @router.delete("/user/{uid}")
 def delete_user(uid: str):
+
     try:
-        # 🔥 ลบจาก Firebase Auth
         auth.delete_user(uid)
 
-        # 🔥 ลบจาก Realtime DB
         ref = db.reference(f"/users/{uid}")
         ref.delete()
 
@@ -57,32 +63,56 @@ def delete_user(uid: str):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
+
+# =========================
+# UPDATE USER (ADMIN)
+# =========================
 @router.put("/user/{uid}")
-def update_user(uid: str, body: dict):
+def update_user(uid: str, body: UpdateUser):
+
     ref = db.reference(f"/users/{uid}")
+    data = ref.get()
 
-    if not ref.get():
-        return {"status": 404, "message": "User not found"}
-
-    ref.update({
-        "first_name": body.get("name", ""),
-        "sex": body.get("gender", ""),
-        "role": body.get("role", "")
-    })
-
-    return {"status": 200, "message": "updated"}
-
-@router.get("/guest")
-def LoginGuest():
-    token = create_token({"uid": "Guest"})
-    return {
-            "token": token,
-            "status": 200
+    if not data:
+        return {
+            "status": 404,
+            "message": "User not found"
         }
 
+    update_data = body.dict(exclude_unset=True)
+
+    if update_data:
+        ref.update(update_data)
+
+    return {
+        "status": 200,
+        "message": "updated"
+    }
+
+
+# =========================
+# GUEST LOGIN
+# =========================
+@router.get("/guest")
+def LoginGuest():
+
+    token = create_token({
+        "uid": "Guest"
+    })
+
+    return {
+        "token": token,
+        "status": 200
+    }
+
+
+# =========================
+# GET ALL USERS
+# =========================
 @router.get("/user")
 def get_all_users():
+
     ref = db.reference("/users")
     data = ref.get()
 
@@ -99,7 +129,7 @@ def get_all_users():
             "uid": uid,
             "email": value.get("email", ""),
             "name": value.get("first_name", ""),
-            "lastname": value.get("last_name",""),
+            "lastname": value.get("last_name", ""),
             "gender": value.get("sex", ""),
             "birthday": value.get("birthday", ""),
             "login_from": value.get("login_from", ""),
@@ -112,11 +142,15 @@ def get_all_users():
     }
 
 
+# =========================
+# UPDATE OWN PROFILE
+# =========================
 @router.put("/setting")
 def update_profile(
-    data: Dict,
-    user = Depends(verify_token)
+    data: UpdateUser,
+    user=Depends(verify_token)
 ):
+
     uid = user["uid"]
 
     ref = db.reference(f"/users/{uid}")
@@ -124,8 +158,10 @@ def update_profile(
     if not ref.get():
         raise HTTPException(status_code=404, detail="User not found")
 
-    # update เฉพาะ field ที่ส่งมา
-    ref.update(data)
+    update_data = data.dict(exclude_unset=True)
+
+    if update_data:
+        ref.update(update_data)
 
     return {
         "status": 201,
