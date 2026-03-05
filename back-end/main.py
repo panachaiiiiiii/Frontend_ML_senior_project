@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import sys
+import os
 
-from routers import user, auth
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from routers import user, auth, predict
 
 app = FastAPI()
 
@@ -19,3 +22,4 @@ def root():
 
 app.include_router(user.router)
 app.include_router(auth.router)
+app.include_router(predict.router)

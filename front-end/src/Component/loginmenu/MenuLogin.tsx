@@ -4,12 +4,46 @@ import LoginBtn from "../../Component/btns/LoginBtn";
 import {Pagepath} from "../../Page/index"
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import GuestBtn from '../btns/GuestBtn';
+import { PagepathAPI } from '../../Router/Path';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/firebase"; // path ให้ตรง
+import { useNavigate } from 'react-router-dom';
 
 
 
 const MenuLogin = () => {
     const [show, setShow] = useState(false);
-   
+    const [Email,setEmail] = useState("");
+    const [Password,setPassword] = useState("");
+  const navigate = useNavigate();
+   const handleSuccess = async () => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      Email,
+      Password
+    );
+    const token = await userCredential.user.getIdToken();
+
+
+    const response = await fetch(PagepathAPI.Login, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.status === 200) {
+      console.log("Login success", data);
+      sessionStorage.setItem("Token", data.token);
+      navigate(Pagepath.home)
+    }
+  } catch (err: any) {
+    console.error("Login error:", err.code, err.message);
+  }
+};
   return (
     <div className="w-5/6 md:w-[478px] md:h-[517px] md:bg-white md:border border-black rounded-lg flex flex-col items-center py-6 gap-4 mx-auto">
       
@@ -19,6 +53,7 @@ const MenuLogin = () => {
         <input
           type="email"
           placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
           className="h-12 rounded-xl border bg-white border-black px-4 outline-none focus:shadow-lg "
         />
       </div>
@@ -30,6 +65,7 @@ const MenuLogin = () => {
           type={show ? "text" : "password"}
           placeholder="Password"
           className="h-12 rounded-xl border bg-white  border-black px-4 pr-10 outline-none focus:shadow-lg"
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           type="button"
@@ -44,7 +80,7 @@ const MenuLogin = () => {
 
 
       {/* Login */}
-      <Btn text="เข้าสู่ระบบ" href="/login" />
+      <Btn text="เข้าสู่ระบบ" onClick={handleSuccess} />
 
       {/* Divider */}
       <div className="flex items-center w-[90%] gap-3 my-2">

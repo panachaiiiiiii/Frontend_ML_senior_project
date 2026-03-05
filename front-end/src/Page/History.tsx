@@ -1,7 +1,19 @@
 import React from "react";
 import ResultsBtn from "../Component/btns/ResultsBtn";
+import { PagepathAPI } from "../Router/Path";
 
 const History = () => {
+  const gethistorydata = async () => {
+    try{
+      const token = sessionStorage.getItem("Token");
+      const response = await fetch(PagepathAPI.History, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    }
+  }
   return (
     <div className="min-h-screen flex flex-col  items-center ">
       <div className="mt-32">

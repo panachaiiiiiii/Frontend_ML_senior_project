@@ -6,5 +6,11 @@ export const PagepathAPI = {
     Guset:`${BACKEND_URL}/guest`,
     Register : `${BACKEND_URL}/register`,
     SetupUser : `${BACKEND_URL}/setupprofile`,
-    Profile :`${BACKEND_URL}/setting`
+    Profile :`${BACKEND_URL}/setting`,
+    Login: `${BACKEND_URL}/login`,
+    GetAllUser: `${BACKEND_URL}/user`,
+    Predict:`${BACKEND_URL}/predict`,
+    History:`${BACKEND_URL}/history`,
+    
+    
 } as const

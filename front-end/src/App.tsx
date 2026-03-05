@@ -5,10 +5,24 @@ import "./App.css";
 import "antd/dist/reset.css";
 import ProtectedRoute from "./Component/ProtectedRoute";
 import ProtectedRouteLogin from "./Component/ProtectedRouteLogin";
+import ProtectedRouteAdmin from "./Component/ProtectedRouteAdmin";
 
 const App = () => {
+  
   return (
+
+    //login
     <Routes>
+      <Route
+        element={
+          <ProtectedRouteAdmin>
+            <Layout />
+          </ProtectedRouteAdmin>
+        }
+      >
+        <Route path={`${Page.Pagepath.admin}/*`} element={<Page.Admin />} />
+      </Route>
+
       <Route
         element={
           <ProtectedRouteLogin>
@@ -20,6 +34,8 @@ const App = () => {
         <Route path={Page.Pagepath.register} element={<Page.Register />} />
         <Route path={Page.Pagepath.setupprofile} element={<Page.SetupProfile />}/>
       </Route>
+
+    {/* logined  */}
       <Route
         element={
           <ProtectedRoute>

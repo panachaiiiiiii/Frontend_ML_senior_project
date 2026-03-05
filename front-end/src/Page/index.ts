@@ -6,6 +6,7 @@ export { default as History } from "./History"
 export { default as ResultPage } from "./ResultPage"
 export { default as Inspect } from "./Inspect"
 export { default as SetupProfile } from "./SetupProfile"
+export { default as Admin} from "./Admin"
 export const Pagepath = {
   home: "/",
   login: "/login",
@@ -15,4 +16,5 @@ export const Pagepath = {
   resultpage: "/resultpage",
   inspect: "/inspect",
   setupprofile: "/setup-profile",
+  admin: "/admin"
 } as const

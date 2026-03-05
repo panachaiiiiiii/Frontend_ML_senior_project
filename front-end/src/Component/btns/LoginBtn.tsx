@@ -18,23 +18,29 @@ const LoginBtn = (props: LoginBtnProps) => {
     try {
       const response = await fetch(PagepathAPI.LoginWithGoogle, {
         method: "POST",
-        
+
         headers: {
           "Content-Type": "application/json",
         },
-         body: JSON.stringify({
-           access_token: accessToken,
-         }),
+        body: JSON.stringify({
+          access_token: accessToken,
+        }),
       });
 
       const data = await response.json();
-      if (data.status === 201 ) {
-        sessionStorage.setItem("Token", data.token)
-        window.location.href = Pagepath.setupprofile;
-               
-      } else {
+      if (data.status === 201) {
         sessionStorage.setItem("Token", data.token);
-        window.location.href = Pagepath.home;
+        window.location.href = Pagepath.setupprofile;
+      }
+      if (data.status === 200) {
+        if (data.user.role === "admin") {
+          sessionStorage.setItem("Token", data.token);
+          window.location.href = Pagepath.admin;
+        } else {
+          sessionStorage.setItem("Token", data.token);
+          window.location.href = Pagepath.home;
+        }
+      } else {
       }
     } catch (error) {
       console.error("Send token error:", error);
