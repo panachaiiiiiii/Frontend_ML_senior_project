@@ -11,6 +11,7 @@ export const PagepathAPI = {
     GetAllUser: `${BACKEND_URL}/user`,
     Predict:`${BACKEND_URL}/predict`,
     History:`${BACKEND_URL}/history`,
+    AdminHistory:`${BACKEND_URL}/admin/history`
     
     
 } as const

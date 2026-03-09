@@ -8,19 +8,19 @@ import ProtectedRouteLogin from "./Component/ProtectedRouteLogin";
 import ProtectedRouteAdmin from "./Component/ProtectedRouteAdmin";
 
 const App = () => {
-  
   return (
-
     //login
     <Routes>
       <Route
+        path={Page.Pagepath.admin}
         element={
           <ProtectedRouteAdmin>
             <Layout />
           </ProtectedRouteAdmin>
         }
       >
-        <Route path={`${Page.Pagepath.admin}/*`} element={<Page.Admin />} />
+        <Route index element={<Page.Admin />} />
+        <Route path="history" element={<Page.History />} />
       </Route>
 
       <Route
@@ -32,10 +32,13 @@ const App = () => {
       >
         <Route path={Page.Pagepath.login} element={<Page.Login />} />
         <Route path={Page.Pagepath.register} element={<Page.Register />} />
-        <Route path={Page.Pagepath.setupprofile} element={<Page.SetupProfile />}/>
+        <Route
+          path={Page.Pagepath.setupprofile}
+          element={<Page.SetupProfile />}
+        />
       </Route>
 
-    {/* logined  */}
+      {/* logined  */}
       <Route
         element={
           <ProtectedRoute>
@@ -48,7 +51,10 @@ const App = () => {
         <Route path={Page.Pagepath.history} element={<Page.History />} />
         <Route path={Page.Pagepath.resultpage} element={<Page.ResultPage />} />
         <Route path={Page.Pagepath.inspect} element={<Page.Inspect />} />
-
+        <Route
+          path={Page.Pagepath.GetselfHistory}
+          element={<Page.GetselfHistory />}
+        />
       </Route>
     </Routes>
   );

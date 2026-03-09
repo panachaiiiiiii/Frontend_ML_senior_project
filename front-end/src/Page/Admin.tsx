@@ -12,8 +12,9 @@ import {
 } from "antd";
 import type { TableColumnsType } from "antd";
 import { PagepathAPI } from "../Router/Path";
-import type { DatePickerProps } from "antd";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { Pagepath } from ".";
 
 interface DataType {
   uid: string;
@@ -30,11 +31,12 @@ const Admin = () => {
   const [users, setUsers] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // 🟢 MODAL STATE
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<DataType | null>(null);
 
-  // 🔄 GET ALL USERS
+  const navigate = useNavigate();
+
+  // 🔄 GET USERS
   const getAllUser = async () => {
     setLoading(true);
     try {
@@ -56,13 +58,13 @@ const Admin = () => {
     getAllUser();
   }, []);
 
-  // ✏️ EDIT → OPEN MODAL
+  // ✏️ EDIT
   const handleEdit = (record: DataType) => {
     setSelectedUser(record);
     setOpen(true);
   };
 
-  // 💾 SAVE EDIT
+  // 💾 SAVE
   const handleSave = async () => {
     if (!selectedUser) return;
 
@@ -80,9 +82,11 @@ const Admin = () => {
       });
 
       message.success("อัปเดตข้อมูลสำเร็จ");
+
       setOpen(false);
       setSelectedUser(null);
-      getAllUser(); // 🔄 refresh
+
+      getAllUser();
     } catch (err) {
       console.error(err);
       message.error("อัปเดตไม่สำเร็จ");
@@ -95,11 +99,37 @@ const Admin = () => {
       await fetch(`${PagepathAPI.GetAllUser}/${record.uid}`, {
         method: "DELETE",
       });
+
       message.success("ลบผู้ใช้เรียบร้อย");
+
       getAllUser();
     } catch (err) {
       console.error(err);
       message.error("ลบไม่สำเร็จ");
+    }
+  };
+
+  // 📜 HISTORY
+  const gethistorydata = async (record: DataType) => {
+    try {
+      const response = await fetch(
+        `${PagepathAPI.AdminHistory}/${record.uid}`
+      );
+
+      const data = await response.json();
+
+      if (data.data) {
+        navigate(Pagepath.HistoryAdmin, {
+          state: {
+            data: data.data,
+          },
+        });
+      } else {
+        message.info("ผู้ใช้นี้ยังไม่มีประวัติ");
+      }
+    } catch (err) {
+      console.error(err);
+      message.error("โหลดประวัติไม่สำเร็จ");
     }
   };
 
@@ -116,6 +146,13 @@ const Admin = () => {
       key: "action",
       render: (_, record) => (
         <Space>
+          <Button
+            className="!bg-green-600 !text-white hover:!bg-green-700"
+            onClick={() => gethistorydata(record)}
+          >
+            HISTORY
+          </Button>
+
           <Button type="primary" onClick={() => handleEdit(record)}>
             EDIT
           </Button>
@@ -136,7 +173,9 @@ const Admin = () => {
 
   return (
     <div>
-      <h1 className="text-center text-4xl font-bold my-8">Admin Dashboard</h1>
+      <h1 className="text-center text-4xl font-bold my-8">
+        Admin Dashboard
+      </h1>
 
       <Table<DataType>
         rowKey="uid"
@@ -146,7 +185,7 @@ const Admin = () => {
         pagination={{ pageSize: 5 }}
       />
 
-      {/* 🟢 MODAL EDIT */}
+      {/* MODAL */}
       <Modal
         title="Edit User"
         open={open}
@@ -163,11 +202,12 @@ const Admin = () => {
           }
           style={{ marginBottom: 10 }}
         />
+
         <Input
-          placeholder="Name"
+          placeholder="Last name"
           value={selectedUser?.lastname}
           onChange={(e) =>
-            setSelectedUser({ ...selectedUser!, name: e.target.value })
+            setSelectedUser({ ...selectedUser!, lastname: e.target.value })
           }
           style={{ marginBottom: 10 }}
         />
@@ -175,15 +215,22 @@ const Admin = () => {
         <Select
           value={selectedUser?.gender}
           style={{ width: "100%", marginBottom: 10 }}
-          onChange={(v) => setSelectedUser({ ...selectedUser!, gender: v })}
+          onChange={(v) =>
+            setSelectedUser({ ...selectedUser!, gender: v })
+          }
           options={[
             { value: "male", label: "Male" },
             { value: "female", label: "Female" },
           ]}
         />
+
         <DatePicker
           style={{ width: "100%", marginBottom: 10 }}
-          value={selectedUser?.birthday ? dayjs(selectedUser.birthday) : null}
+          value={
+            selectedUser?.birthday
+              ? dayjs(selectedUser.birthday)
+              : null
+          }
           onChange={(date) =>
             setSelectedUser({
               ...selectedUser!,
@@ -191,10 +238,13 @@ const Admin = () => {
             })
           }
         />
+
         <Select
           value={selectedUser?.role}
           style={{ width: "100%" }}
-          onChange={(v) => setSelectedUser({ ...selectedUser!, role: v })}
+          onChange={(v) =>
+            setSelectedUser({ ...selectedUser!, role: v })
+          }
           options={[
             { value: "user", label: "User" },
             { value: "admin", label: "Admin" },

@@ -118,7 +118,7 @@ const SettingmenuMoblie = () => {
           <h1 className="text-lg font-bold">ประวัติ</h1>
           <Tabbtn
             label="ประวัติการคัดกรองโรค"
-            onClick={() => navigate(Pagepath.history)}
+            onClick={() => navigate(Pagepath.GetselfHistory)}
           />
         </div>
         <div>

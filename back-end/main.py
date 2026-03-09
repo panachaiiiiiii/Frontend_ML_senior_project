@@ -4,7 +4,7 @@ import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from routers import user, auth, predict
+from routers import user, auth, predict,admin
 
 app = FastAPI()
 
@@ -23,3 +23,4 @@ def root():
 app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(predict.router)
+app.include_router(admin.router)

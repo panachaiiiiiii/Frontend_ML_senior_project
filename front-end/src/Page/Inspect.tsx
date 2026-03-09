@@ -3,6 +3,7 @@ import Btn from "../Component/btns/Btn";
 import { PagepathAPI } from "../Router/Path";
 import { useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
+import loading_state from "../Component/Loading/loading";
 
 const Inspect = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -43,14 +44,7 @@ const Inspect = () => {
   return (
     <div>
       {loading && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-2xl flex flex-col items-center gap-4 shadow-xl">
-            <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-green-800 font-semibold text-lg">
-              กำลังประมวลผล...
-            </p>
-          </div>
-        </div>
+        loading_state("กำลังคัดกรองโรค")
       )}
       <input
         ref={fileRef}

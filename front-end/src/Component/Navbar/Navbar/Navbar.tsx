@@ -20,7 +20,7 @@ function Navbar({ loggedIn }: NavbarProps) {
       </h1>
       <div className="flex space-x-3">
         <a href={Page.Pagepath.inspect}>คัดกรองโรค</a>
-        {loggedIn ? <a href={Page.Pagepath.history}>ประวัติการคัดกรอง</a> : null}
+        {loggedIn ? <a href={Page.Pagepath.GetselfHistory}>ประวัติการคัดกรอง</a> : null}
       </div>
       <div className="flex space-x-3">
         {loggedIn ? (

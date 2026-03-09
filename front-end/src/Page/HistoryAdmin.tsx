@@ -2,20 +2,26 @@ import React from "react";
 import ResultsBtn from "../Component/btns/ResultsBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
+import loading_state from "../Component/Loading/loading";
 
-const History = () => {
+const HistoryAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const History = location.state;
-  console.log(History)
+
+  const historyData = location.state?.data;
+
+  if (!historyData.data) {
+    return loading_state("ไม่พบข้อมูล");
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="mt-32">
         <p className="text-3xl">ประวัติการคัดกรองโรค</p>
       </div>
-      
+
       <div className="md:w-3/5 mx-auto min-h-96 gap-3 flex flex-col mt-6">
-        {Object.entries(History.data).map(([id, value]: any) => {
+        {Object.entries(historyData).map(([id, value]: any) => {
           const [name, percent] = Object.entries(value.prediction).reduce(
             (a: any, b: any) => (a[1] > b[1] ? a : b)
           );
@@ -61,4 +67,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default HistoryAdmin;

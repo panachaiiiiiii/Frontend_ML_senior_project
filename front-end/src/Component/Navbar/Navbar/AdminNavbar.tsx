@@ -12,7 +12,7 @@ const AdminNavbar = () => {
       <div></div>
       <div className="flex space-x-3">
         <a href={Page.Pagepath.admin}>รายชื่อผู้ใช้</a>
-        <a href={Page.Pagepath.history}>เปลี่ยนโมเดล</a>
+        <a href={Page.Pagepath.GetselfHistory}>เปลี่ยนโมเดล</a>
       </div>
       <div className="flex space-x-3">
         <div>
