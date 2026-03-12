@@ -1,25 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { PagepathAPI } from "../../Router/Path";
+import { Pagepath } from "../../Page";
 
 const ProfileFillForm = () => {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [gender, setGender] = useState("")
-  const [dob, setDob] = useState("")
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const formData = {
-      firstName,
-      lastName,
-      gender,
-      dob,
-    }
-
-    console.log("SUBMIT DATA:", formData)
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const Token = sessionStorage.getItem("Token");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    sendData()
     // 👉 ส่ง API / เก็บ DB / ไปหน้าถัดไป
-  }
+  };
+  const sendData = async () => {
+    try {
+      const res = await fetch(PagepathAPI.SetupUser, {
+        method: "PUT",
+        
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${Token}`,
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          birthday: dob,
+          sex: gender,
+        }),
+      });
 
+      const data = await res.json();
+
+      if (data.status === 400) {
+        alert(data.detail || "สมัครสมาชิกไม่สำเร็จ");
+        return;
+      }
+      if (data.status === 202) {
+        alert("สมัครสมาชิกสำเร็จ 🎉");
+        sessionStorage.setItem("Token", data.token);
+        window.location.href = Pagepath.home;
+      }
+    } catch (err) {
+      console.error(err);
+      alert("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้");
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -63,7 +89,7 @@ const ProfileFillForm = () => {
             onChange={(e) => setGender(e.target.value)}
             className=" h-12 md:w-full   rounded-xl border border-black px-4 outline-none bg-white focus:shadow-lg"
           >
-            <option value="" disabled >
+            <option value="" disabled>
               เลือกเพศ
             </option>
             <option value="male">ชาย</option>
@@ -81,22 +107,17 @@ const ProfileFillForm = () => {
             onChange={(e) => setDob(e.target.value)}
             className=" h-12 w-full rounded-xl border border-black px-4 outline-none focus:shadow-lg"
           />
-
-
         </div>
       </div>
 
       {/* Submit */}
       <div className="flex justify-center">
-        <button
-          type="submit"
-          className="Buttoncustom"
-        >
+        <button type="submit" className="Buttoncustom">
           ยืนยัน
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default ProfileFillForm
+export default ProfileFillForm;
