@@ -114,7 +114,6 @@ const Inspect = () => {
         </div>
       </div>
       <div className="md:hidden">mobile</div>
->>>>>>> s/backend
     </div>
   );
 };
