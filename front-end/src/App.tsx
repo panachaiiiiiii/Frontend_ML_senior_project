@@ -19,8 +19,10 @@ const App = () => {
           </ProtectedRouteAdmin>
         }
       >
-        <Route index element={<Page.Admin />} />
+        <Route index element={<Page.Admin/>} />
         <Route path="history" element={<Page.History />} />
+        <Route path="user" element={<Page.Adminuser />} />
+
       </Route>
 
       <Route
