@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<<< HEAD:.gitignore
-=======
->>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a
 # Logs
 logs
 *.log
@@ -15,7 +11,17 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Firebase
 firebase_key
+firebase_key*
+firebase_key.json
+serviceAccountKey*
+serviceAccountKey.json
+
+# Env
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -26,14 +32,3 @@ firebase_key
 *.njsproj
 *.sln
 *.sw?
-<<<<<<< HEAD
-firebase_key*
-serviceAccountKey*
-.env
-========
->>>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a:back-end/.gitignore
-=======
-firebase_key.json
-serviceAccountKey.json
-.env
->>>>>>> 99d9c259c592e70925667a40b8a43be2c0345c8a
