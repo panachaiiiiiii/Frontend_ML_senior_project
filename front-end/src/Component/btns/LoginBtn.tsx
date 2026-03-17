@@ -40,7 +40,6 @@ const LoginBtn = (props: LoginBtnProps) => {
           sessionStorage.setItem("Token", data.token);
           window.location.href = Pagepath.home;
         }
-      } else {
       }
     } catch (error) {
       console.error("Send token error:", error);

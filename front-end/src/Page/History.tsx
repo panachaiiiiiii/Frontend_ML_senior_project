@@ -3,21 +3,35 @@ import ResultsBtn from "../Component/btns/ResultsBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
 
+type Prediction = Record<string, number>;
+
+type HistoryItem = {
+  prediction: Prediction;
+  created_at: string;
+};
+
+type HistoryState = {
+  data: Record<string, HistoryItem>;
+};
+
 const History = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const History = location.state;
-  console.log(History)
+
+  const history = location.state as HistoryState;
+
+  console.log(history);
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="mt-32">
         <p className="text-3xl">ประวัติการคัดกรองโรค</p>
       </div>
-      
+
       <div className="md:w-3/5 mx-auto min-h-96 gap-3 flex flex-col mt-6">
-        {Object.entries(History.data).map(([id, value]: any) => {
+        {Object.entries(history.data).map(([id, value]) => {
           const [name, percent] = Object.entries(value.prediction).reduce(
-            (a: any, b: any) => (a[1] > b[1] ? a : b)
+            (a, b) => (a[1] > b[1] ? a : b),
           );
 
           const date = new Date(value.created_at);
@@ -30,10 +44,7 @@ const History = () => {
             .padStart(2, "0")}/${date
             .getFullYear()
             .toString()
-            .slice(-2)} (${date
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${date
+            .slice(-2)} (${date.getHours().toString().padStart(2, "0")}:${date
             .getMinutes()
             .toString()
             .padStart(2, "0")})`;
@@ -48,8 +59,7 @@ const History = () => {
                 navigate(Pagepath.resultpage, {
                   state: {
                     data: value.prediction,
-                    file:
-                      "/484559610_1157118856425292_3226630206637606924_n_60b31a2dcd.jpg",
+                    file: "/484559610_1157118856425292_3226630206637606924_n_60b31a2dcd.jpg",
                   },
                 })
               }

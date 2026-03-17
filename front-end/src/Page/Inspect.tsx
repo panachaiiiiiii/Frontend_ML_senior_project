@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from "react";
 import Btn from "../Component/btns/Btn";
 import { PagepathAPI } from "../Router/Path";
@@ -36,17 +35,17 @@ const Inspect = () => {
 
       console.log("Result:", data);
       navigate(Pagepath.resultpage, { state: { data: data, file: file } });
-    } catch (err: any) {
-      console.error(err);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      }
     } finally {
       setLoading(false); // ✅ หยุดโหลดไม่ว่าจะ error หรือสำเร็จ
     }
   };
   return (
     <div>
-      {loading && (
-        loading_state("กำลังคัดกรองโรค")
-      )}
+      {loading && loading_state("กำลังคัดกรองโรค")}
       <input
         ref={fileRef}
         type="file"

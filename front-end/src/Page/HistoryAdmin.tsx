@@ -2,17 +2,25 @@ import React from "react";
 import ResultsBtn from "../Component/btns/ResultsBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
-import loading_state from "../Component/Loading/loading";
 
-const HistoryAdmin = () => {
+type Prediction = Record<string, number>;
+
+type HistoryItem = {
+  prediction: Prediction;
+  created_at: string;
+};
+
+type HistoryState = {
+  data: Record<string, HistoryItem>;
+};
+
+const History = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const historyData = location.state?.data;
+  const history = location.state as HistoryState;
 
-  if (!historyData.data) {
-    return loading_state("ไม่พบข้อมูล");
-  }
+  console.log(history);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -21,9 +29,9 @@ const HistoryAdmin = () => {
       </div>
 
       <div className="md:w-3/5 mx-auto min-h-96 gap-3 flex flex-col mt-6">
-        {Object.entries(historyData).map(([id, value]: any) => {
+        {Object.entries(history.data).map(([id, value]) => {
           const [name, percent] = Object.entries(value.prediction).reduce(
-            (a: any, b: any) => (a[1] > b[1] ? a : b)
+            (a, b) => (a[1] > b[1] ? a : b),
           );
 
           const date = new Date(value.created_at);
@@ -36,10 +44,7 @@ const HistoryAdmin = () => {
             .padStart(2, "0")}/${date
             .getFullYear()
             .toString()
-            .slice(-2)} (${date
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${date
+            .slice(-2)} (${date.getHours().toString().padStart(2, "0")}:${date
             .getMinutes()
             .toString()
             .padStart(2, "0")})`;
@@ -54,8 +59,7 @@ const HistoryAdmin = () => {
                 navigate(Pagepath.resultpage, {
                   state: {
                     data: value.prediction,
-                    file:
-                      "/484559610_1157118856425292_3226630206637606924_n_60b31a2dcd.jpg",
+                    file: "/484559610_1157118856425292_3226630206637606924_n_60b31a2dcd.jpg",
                   },
                 })
               }
@@ -67,4 +71,4 @@ const HistoryAdmin = () => {
   );
 };
 
-export default HistoryAdmin;
+export default History;

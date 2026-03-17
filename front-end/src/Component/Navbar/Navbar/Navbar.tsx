@@ -5,7 +5,7 @@ import {
   HomeOutlined,
   SettingOutlined,
   LogoutOutlined,
-  LoginOutlined,
+
 } from "@ant-design/icons";
 interface NavbarProps {
   loggedIn: boolean;

@@ -1,10 +1,6 @@
-import { Layout, Menu, Card, Row, Col, Select, Slider, Table } from "antd";
-import {
-  DashboardOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Card, Col, Layout, Row, Table } from "antd";
 
-const { Header, Content, Sider } = Layout;
+const { Content } = Layout;
 
 const columns = [
   { title: "Disease", dataIndex: "disease" },
@@ -19,15 +15,8 @@ const data = [
 const Admin = () => {
   return (
     <div>
-    
-
-
       <Layout>
-        
-
-
         <Content style={{ margin: "16px" }}>
-          
           {/* Stats */}
           <Row gutter={16}>
             <Col span={8}>
@@ -48,15 +37,11 @@ const Admin = () => {
           {/* Charts */}
           <Row gutter={16}>
             <Col span={12}>
-              <Card title="Gender Distribution">
-                Chart Here
-              </Card>
+              <Card title="Gender Distribution">Chart Here</Card>
             </Col>
 
             <Col span={12}>
-              <Card title="Disease Frequency">
-                Chart Here
-              </Card>
+              <Card title="Disease Frequency">Chart Here</Card>
             </Col>
           </Row>
 
@@ -66,9 +51,7 @@ const Admin = () => {
           <Card title="Disease Results">
             <Table columns={columns} dataSource={data} />
           </Card>
-
         </Content>
-
       </Layout>
     </div>
   );

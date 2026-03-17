@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 type Slide = {
   id: number;

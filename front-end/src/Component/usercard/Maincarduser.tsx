@@ -1,4 +1,3 @@
-import React from "react";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 type ListItemProps = {
@@ -17,8 +16,6 @@ const Maincarduser = ({
   email,
   name,
   lastname,
-  dob,
-  sex,
   from,
   role,
   onClick,

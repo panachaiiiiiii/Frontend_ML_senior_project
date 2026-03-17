@@ -11,7 +11,7 @@ const SettingmenuMoblie = () => {
   const [open, setOpen] = useState(false); // ✅ ต้องอยู่ตรงนี้
   const [label, setLabel] = useState("");
   const [value, setvalue] = useState("");
-  const [Email, setEmail] = useState("");
+  //const [_Email, setEmail] = useState("");
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
   const [Gender, setGender] = useState("");
@@ -36,7 +36,7 @@ const SettingmenuMoblie = () => {
         return;
       }
       if (data.status === 202) {
-        setEmail(data.user.email);
+        //setEmail(data.user.email);
         setFirstName(data.user.first_name);
         setLastName(data.user.last_name);
         setbirthday(data.user.birthday);
@@ -48,7 +48,10 @@ const SettingmenuMoblie = () => {
     }
   };
   useEffect(() => {
-    GetUserProfile();
+    const runfun = async () => {
+      GetUserProfile();
+    };
+    runfun();
   }, []);
   return (
     <div>
