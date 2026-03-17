@@ -1,4 +1,3 @@
-import React from "react";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 type ListItemProps = {

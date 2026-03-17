@@ -1,5 +1,5 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import Btn from "../btns/Btn";
 import { Pagepath } from "../../Page";
 import { PagepathAPI } from "../../Router/Path";

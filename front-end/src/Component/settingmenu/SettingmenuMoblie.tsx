@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Tabbtn from "../btns/Tabbtn";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal/Modal";

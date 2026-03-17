@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Btn from "../btns/Btn";
 const InspectDesktop = () => {
       const fileRef = useRef<HTMLInputElement>(null);

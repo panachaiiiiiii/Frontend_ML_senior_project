@@ -1,4 +1,4 @@
-import React from 'react'
+
 import ProfileFillForm from '../Component/register/ProfileFillForm'
 
 const SetupProfile = () => {

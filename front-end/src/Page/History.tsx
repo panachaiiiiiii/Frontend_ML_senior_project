@@ -1,4 +1,4 @@
-import React from "react";
+
 import ResultsBtn from "../Component/btns/ResultsBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagepath } from ".";

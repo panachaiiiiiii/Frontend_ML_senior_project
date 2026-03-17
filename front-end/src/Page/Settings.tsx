@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import Settingmenu from "../Component/settingmenu/Settingmenu";
 import SettingmenuMoblie from "../Component/settingmenu/SettingmenuMoblie";
 import { Pagepath } from ".";

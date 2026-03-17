@@ -1,4 +1,3 @@
-import React from "react";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 type ListItemProps = {
@@ -8,7 +7,7 @@ type ListItemProps = {
   picref: string;
   muted?: boolean;
 };
-
+ 
 const ResultsBtn = ({
   timelabel,
   resultlabel,

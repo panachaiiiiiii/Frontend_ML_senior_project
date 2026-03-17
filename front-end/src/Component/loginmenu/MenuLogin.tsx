@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Btn from "../../Component/btns/Btn";
 import LoginBtn from "../../Component/btns/LoginBtn";
 import { Pagepath } from "../../Page/index";
