@@ -13,6 +13,7 @@ const ProfileFillForm = () => {
     sendData()
     // 👉 ส่ง API / เก็บ DB / ไปหน้าถัดไป
   };
+
   const sendData = async () => {
     try {
       const res = await fetch(PagepathAPI.SetupUser, {

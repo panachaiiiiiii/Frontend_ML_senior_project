@@ -10,6 +10,7 @@ export { default as Admin} from "./Admin"
 export { default as GetselfHistory} from"./GetselfHistory"
 export { default as HistoryAdmin} from"./HistoryAdmin"
 export { default as Adminuser} from"./Adminuser"
+export { default as Models} from"./Models"
 
 export const Pagepath = {
   home: "/",
@@ -23,5 +24,6 @@ export const Pagepath = {
   setupprofile: "/setup-profile",
   admin: "/admin",
   HistoryAdmin:"/admin/history",
-  adminuser: "/admin/user"
+  adminuser: "/admin/user",
+  Models: "/admin/ModelSetting"
 } as const

@@ -21,11 +21,14 @@ const ResultPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="mt-6">
-        <p className="text-3xl">ผลการคัดกรองโรค</p>
+        
+        <p className="text-xl sm:text-3xl">ผลการคัดกรองโรค จากโมเดล {data.model}</p>
+        
+        
       </div>
 
       <div className="mt-2">
-        <div className="sm:w-80 sm:h-80 border-3 border-green-800 rounded-xl overflow-hidden mx-auto">
+        <div className="w-3/6 sm:w-80 sm:h-80 border-3 border-green-800 rounded-xl overflow-hidden mx-auto">
           <img
             className="h-full w-full object-cover"
             src={imageUrl}
@@ -33,8 +36,8 @@ const ResultPage = () => {
           />
         </div>
 
-        <div className="flex flex-col items-center mt-4 gap-3">
-          {Object.entries(data)
+        <div className="w-3/6 sm:w-full mx-auto flex flex-col items-center mt-4 gap-3">
+          {Object.entries(data.result)
             .sort((a, b) => b[1] - a[1])
             .map(([label, value], index) => (
               <Tabbtn key={index} label={`${label} ${value}%`} />

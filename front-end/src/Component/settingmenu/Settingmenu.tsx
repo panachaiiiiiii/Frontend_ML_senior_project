@@ -52,7 +52,7 @@ const Settingmenu = () => {
       }
     };
   useEffect(() => {
-    const runfun =async()=>{ GetUserProfile()}
+    const runfun =()=>{ GetUserProfile()}
     runfun();
   
   }, [token]);

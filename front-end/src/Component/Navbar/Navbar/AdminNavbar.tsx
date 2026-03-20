@@ -11,8 +11,9 @@ const AdminNavbar = () => {
     <nav className="h-16 w-screen bg-green-600 text-white py-4 px-20 flex items-center justify-between ">
       <div></div>
       <div className="flex space-x-3">
+        <a href={Page.Pagepath.admin}>Dashboard</a>
         <a href={Page.Pagepath.adminuser}>รายชื่อผู้ใช้</a>
-        <a href={Page.Pagepath.GetselfHistory}>เปลี่ยนโมเดล</a>
+        <a href={Page.Pagepath.Models}>เปลี่ยนโมเดล</a>
       </div>
       <div className="flex space-x-3">
         <div>

@@ -33,12 +33,13 @@ const MenuLogin = () => {
       const response = await fetch(PagepathAPI.Login, {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
 
       const data = await response.json();
-
+      console.log( data);
       if (data.status === 200) {
         console.log("Login success", data);
 
@@ -71,7 +72,7 @@ const MenuLogin = () => {
   };
   return (
     <div className="w-5/6 md:w-[478px] md:h-[517px] md:bg-white md:border border-black rounded-lg flex flex-col items-center py-6 gap-4 mx-auto">
-      {loading && loading_state("กำลังคัดกรองโรค")}
+      {loading && loading_state("กรุณารอสักครู่")}
       {/* Email */}
       <div className="w-[80%] flex flex-col gap-1">
         <label>Email</label>

@@ -29,12 +29,9 @@ def verify_password(plain_password, hashed_password):
 
 
 class Userinfo(BaseModel):
-    uid : str
-    email: str
     first_name : str
     last_name : str
     sex : str
-    role: str
     birthday : date
 class Token(BaseModel):
     token:str
@@ -137,7 +134,10 @@ async def login(request: Request):
 @router.post("/login")
 def login(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
+        print("🔥 HIT LOGIN")
         token = credentials.credentials
+        if not credentials:
+            raise HTTPException(status_code=401, detail="No credentials")
         print("TOKEN LENGTH:", len(token))
 
         decoded = verify_id_token(token)
@@ -147,6 +147,8 @@ def login(credentials: HTTPAuthorizationCredentials = Depends(security)):
 
         ref = db.reference(f"users/{uid}")
         user = ref.get()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
         tokens = create_token({"uid": uid,"login":True})
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
