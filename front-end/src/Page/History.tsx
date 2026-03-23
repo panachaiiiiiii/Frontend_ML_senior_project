@@ -3,10 +3,8 @@ import ResultsBtn from "../Component/btns/ResultsBtn";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
 
-type Prediction = Record<string, number>;
-
 type HistoryItem = {
-  prediction: Prediction;
+  prediction: { [key: string]: number };
   created_at: string;
 };
 
@@ -20,7 +18,7 @@ const History = () => {
 
   const history = location.state as HistoryState;
 
-  console.log(history);
+  console.log(history.data);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
@@ -30,7 +28,10 @@ const History = () => {
 
       <div className="md:w-3/5 mx-auto min-h-96 gap-3 flex flex-col mt-6">
         {Object.entries(history.data).map(([id, value]) => {
-          const [name, percent] = Object.entries(value.prediction).reduce(
+          
+          const r = value.prediction;
+          console.log(r)
+          const [name, percent] = Object.entries(r.result).reduce(
             (a, b) => (a[1] > b[1] ? a : b),
           );
 
@@ -58,7 +59,7 @@ const History = () => {
               onClick={() =>
                 navigate(Pagepath.resultpage, {
                   state: {
-                    data: value.prediction,
+                    result: value.prediction,
                     file: "/484559610_1157118856425292_3226630206637606924_n_60b31a2dcd.jpg",
                   },
                 })

@@ -3,14 +3,14 @@ import Tabbtn from "../Component/btns/Tabbtn";
 import { useLocation } from "react-router-dom";
 
 type PredictionResult = {
-  data: { [key: string]: number };
-  file?: File;
+  result: { [key: string]: number };
+  file?: File | string;
 };
 
 const ResultPage = () => {
   const location = useLocation();
-  const { data, file } = location.state as PredictionResult;
-
+  const { result, file } = location.state as PredictionResult;
+  console.log(result)
   const imageUrl =
   typeof file === "string"
     ? file
@@ -22,7 +22,7 @@ const ResultPage = () => {
     <div className="min-h-screen flex flex-col items-center">
       <div className="mt-6">
         
-        <p className="text-xl sm:text-3xl">ผลการคัดกรองโรค จากโมเดล {data.model}</p>
+        <p className="text-xl sm:text-3xl">ผลการคัดกรองโรค จากโมเดล {result.model}</p>
         
         
       </div>
@@ -37,7 +37,7 @@ const ResultPage = () => {
         </div>
 
         <div className="w-3/6 sm:w-full mx-auto flex flex-col items-center mt-4 gap-3">
-          {Object.entries(data.result)
+          {Object.entries(result.result)
             .sort((a, b) => b[1] - a[1])
             .map(([label, value], index) => (
               <Tabbtn key={index} label={`${label} ${value}%`} />

@@ -185,9 +185,9 @@ def dashboard_stats():
 
         for rid, result in results.items():
             total_scans += 1
-
-            prediction = result.get("prediction", {})
-            model = result.get("model")
+            resultss = result.get("prediction")
+            prediction = resultss.get("result", {})
+            model = resultss.get("model")
 
             if not prediction:
                 continue

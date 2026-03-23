@@ -1,20 +1,20 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Btn from "../Component/btns/Btn";
 import { PagepathAPI } from "../Router/Path";
 import { useNavigate } from "react-router-dom";
 import { Pagepath } from ".";
 import loading_state from "../Component/Loading/loading";
-
-// ✅ source of truth (แก้ที่นี่ที่เดียว)
-const MODELS = ["DenseNet121", "MobileNetV2", "model"] as const;
-
-// ✅ type auto จาก array
-type ModelType = (typeof MODELS)[number];
+import { message } from "antd";
 
 // ✅ type response (ยังคงของคุณไว้)
 type PredictResponse = {
-  result: string;
-  model: ModelType;
+  model: string;
+  result: { [key: string]: number };
+};
+
+type ModelItem = {
+  name: string;
+  enabled: boolean;
 };
 
 const Inspect = () => {
@@ -22,7 +22,8 @@ const Inspect = () => {
 
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [model, setModel] = useState<ModelType>(MODELS[0]); // 👈 default จาก array
+  const [models, setModels] = useState<string[]>([]);
+  const [model, setModel] = useState<string>(""); // 👈 default จาก array
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -56,23 +57,54 @@ const Inspect = () => {
 
       const data: PredictResponse = await response.json();
 
-      console.log("Result:", data);
+      const result = data.result;
+      const model_name = data.model;
+      
 
       navigate(Pagepath.resultpage, {
         state: {
-          data,
+          model_name,
+          result,
           file,
         },
       });
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.log(err.message);
+        alert(err.message); // 👈 เพิ่มตรงนี้
+      } else {
+        alert("เกิดข้อผิดพลาด");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const getmodel = async () => {
+    try {
+      const res = await fetch(PagepathAPI.Model);
+      const data = await res.json();
+
+      // 👉 เอาเฉพาะ enabled = true
+      const enabledModels = data.models
+        .filter((m: ModelItem) => m.enabled)
+        .map((m: ModelItem) => m.name);
+
+      setModels(enabledModels);
+
+      // set default
+      if (enabledModels.length > 0) {
+        setModel(enabledModels[0]);
+      }
+    } catch (err) {
+      console.error(err);
+      message.error("โหลดข้อมูลไม่สำเร็จ");
+    }
+  };
+
+  useEffect(() => {
+    getmodel();
+  }, []);
   return (
     <div>
       {loading && loading_state("กำลังคัดกรองโรค")}
@@ -93,14 +125,11 @@ const Inspect = () => {
         }}
       />
 
-      <div className="hidden md:flex flex-col mt-8 items-center justify-center">
+      <div className="flex flex-col mt-8 items-center justify-center">
         {/* Title */}
-        <h1 className="text-[52px] font-bold text-green-800">
-          คัดกรองโรค
-        </h1>
+        <h1 className="text-[52px] font-bold text-green-800">คัดกรองโรค</h1>
 
         <div className="flex flex-col items-center text-center gap-6 text-lg">
-          
           {/* preview */}
           {preview ? (
             <img
@@ -114,27 +143,21 @@ const Inspect = () => {
 
           {/* 🔥 select model */}
           <div className="flex flex-col items-center gap-2">
-            <label className="text-green-700 font-semibold">
-              เลือกโมเดล
-            </label>
+            <label className="text-green-700 font-semibold">เลือกโมเดล</label>
 
             <select
               value={model}
-              onChange={(e) =>
-                setModel(e.target.value as ModelType)
-              }
+              onChange={(e) => setModel(e.target.value)}
               className="border border-green-600 p-2 rounded-lg"
             >
-              {MODELS.map((m) => (
+              {models.map((m) => (
                 <option key={m} value={m}>
                   {m}
                 </option>
               ))}
             </select>
 
-            <p className="text-sm text-gray-500">
-              Model ที่เลือก: {model}
-            </p>
+            <p className="text-sm text-gray-500">Model ที่เลือก: {model}</p>
           </div>
 
           {/* buttons */}
@@ -144,39 +167,33 @@ const Inspect = () => {
               onClick={() => fileRef.current?.click()}
             />
 
-            {preview && (
-              <Btn text="ยืนยัน" onClick={onclick} />
-            )}
+            {preview && <Btn text="ยืนยัน" onClick={onclick} />}
           </div>
 
           {/* example images */}
           <div className="flex gap-4 mt-2">
-            {["/ex1.jpg", "/ex1.jpg", "/ex1.jpg"].map(
-              (src, i) => (
-                <div
-                  key={i}
-                  className="border-2 border-green-600 rounded-lg overflow-hidden"
-                >
-                  <img
-                    src={src}
-                    alt={`example-${i}`}
-                    className="w-20 h-20 object-cover"
-                  />
-                </div>
-              )
-            )}
+            {["/ex1.jpg", "/ex1.jpg", "/ex1.jpg"].map((src, i) => (
+              <div
+                key={i}
+                className="border-2 border-green-600 rounded-lg overflow-hidden"
+              >
+                <img
+                  src={src}
+                  alt={`example-${i}`}
+                  className="w-20 h-20 object-cover"
+                />
+              </div>
+            ))}
           </div>
 
-          <p className="text-green-600 text-lg">
-            รูปตัวอย่างการถ่าย
-          </p>
+          <p className="text-green-600 text-lg">รูปตัวอย่างการถ่าย</p>
         </div>
       </div>
 
       {/* mobile */}
-      <div className="md:hidden text-center mt-10">
+      {/* <div className="md:hidden text-center mt-10">
         mobile version coming soon
-      </div>
+      </div> */}
     </div>
   );
 };

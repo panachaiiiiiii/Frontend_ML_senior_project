@@ -30,7 +30,7 @@ const GetselfHistory = () => {
       }
 
       const data = await response.json();
-
+      console.log(data)
       if (data?.data) {
         navigate(Pagepath.history, {
           state: {
