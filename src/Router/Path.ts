@@ -9,7 +9,7 @@ export const PagepathAPI = {
     Profile :`${BACKEND_URL}/setting`,
     Login: `${BACKEND_URL}/login`,
     GetAllUser: `${BACKEND_URL}/user`,
-    Predict:`${BACKEND_URL}/predict`,
+    Predict:`${BACKEND_URL}/predict/`,
     History:`${BACKEND_URL}/history`,
     Adminuserchart:`${BACKEND_URL}/userstate`,
     Model:`${BACKEND_URL}/models`,
