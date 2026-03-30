@@ -20,7 +20,7 @@ const App = () => {
         }
       >
         <Route index element={<Page.Admin/>} />
-        <Route path="history" element={<Page.History />} />
+        <Route path="history" element={<Page.HistoryAdmin />} />
         <Route path="user" element={<Page.Adminuser />} />
         <Route path="ModelSetting" element={<Page.Models />} />
 

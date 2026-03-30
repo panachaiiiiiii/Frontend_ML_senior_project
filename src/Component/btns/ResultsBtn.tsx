@@ -4,6 +4,7 @@ interface TabbtnProps {
   label: string;
   value?: string;     // เพิ่มสิ่งนี้
   isWinner?: boolean; // เพิ่มสิ่งนี้
+  timelabel?:string;
 }
 
 const RTabbtn = ({ label, value, isWinner }: TabbtnProps) => {
