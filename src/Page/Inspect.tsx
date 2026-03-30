@@ -115,6 +115,7 @@ const Inspect = () => {
   useEffect(() => {
     const getmodel = async () => {
       try {
+        setLoading(true)
         const res = await fetch(PagepathAPI.Model);
         const data: ModelApiResponse = await res.json();
         const enabledModels = data.models
@@ -123,6 +124,7 @@ const Inspect = () => {
           
         setModels(enabledModels);
         if (enabledModels.length > 0) setModel(enabledModels[0]);
+        setLoading(false)
       } catch (err) {
         console.error(err);
         message.error("โหลดข้อมูลโมเดลไม่สำเร็จ");
