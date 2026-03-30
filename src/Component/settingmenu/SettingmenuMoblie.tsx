@@ -127,8 +127,6 @@ const SettingmenuMoblie = () => {
         <div>
           <h1 className="text-lg font-bold">อื่น ๆ</h1>
           <div className="flex flex-col gap-3">
-            <Tabbtn label="ข้อกำหนดและการให้ความยินยอม" />
-            <Tabbtn label="เกี่ยวกับเรา" />
             <Tabbtn
               label="ออกจากระบบ"
               onClick={() => {

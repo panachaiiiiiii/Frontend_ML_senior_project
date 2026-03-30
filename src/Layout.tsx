@@ -19,26 +19,25 @@ const Layout = () => {
   );
   const isAdminPath = location.pathname.startsWith(Pagepath.admin);
   const isSettingsPage = location.pathname === Pagepath.settings;
-
   const guest = sessionStorage.getItem("Guest");
 
-  return (
-    <div
-      className={`medical-bg min-h-screen ${ isSettingsPage ? "flex" : ""}`}
-    >
+return (
+    <div className={`medical-bg min-h-screen ${isSettingsPage ? "flex" : ""}`}>
       {/* Desktop */}
       <div className="hidden sm:block">
-        {isAuthPage ? null :  isSettingsPage ? (
+        {isAuthPage ? null : isSettingsPage ? (
           <Sidebar />
-        ) : isAdminPath ? <AdminNavbar/>:(
+        ) : isAdminPath ? (
+          <AdminNavbar />
+        ) : (
           <Navbar loggedIn={!guest} />
         )}
       </div>
 
-      {/* Mobile */}
       <div className="block sm:hidden">{!isAuthPage && <MobileNav />}</div>
 
-      <main className="mx-auto p-4 container">
+
+      <main className={"w-full"}>
         <Outlet />
       </main>
     </div>
