@@ -55,7 +55,7 @@ const Home = () => {
         </div>
 
         {/* ส่วน Slider Card */}
-        <div className="mb-10">
+        <div className="mb-10 ">
           <SliderCard />
         </div>
 

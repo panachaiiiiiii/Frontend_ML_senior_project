@@ -54,6 +54,9 @@ const App = () => {
         <Route path={Page.Pagepath.history} element={<Page.History />} />
         <Route path={Page.Pagepath.resultpage} element={<Page.ResultPage />} />
         <Route path={Page.Pagepath.inspect} element={<Page.Inspect />} />
+        <Route path={Page.Pagepath.CanncerNews} element={<Page.CanncerNews />} />
+        <Route path={Page.Pagepath.Precancer} element={<Page.Precancer/>}/>
+        
         <Route
           path={Page.Pagepath.GetselfHistory}
           element={<Page.GetselfHistory />}

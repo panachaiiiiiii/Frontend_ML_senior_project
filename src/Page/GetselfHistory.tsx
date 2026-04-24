@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { PagepathAPI } from "../Router/Path";
 import { Pagepath } from ".";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 const GetselfHistory = () => {
   const navigate = useNavigate();
@@ -10,7 +11,8 @@ const GetselfHistory = () => {
     const token = sessionStorage.getItem("Token");
 
     if (!token) {
-      alert("กรุณา login ใหม่");
+      message.error("กรุณา login ใหม่");
+
       return;
     }
 
@@ -23,14 +25,14 @@ const GetselfHistory = () => {
 
       // 🔥 กัน 401
       if (response.status === 401) {
-        alert("Token หมดอายุ กรุณา login ใหม่");
+        message.error("Token หมดอายุ กรุณา login ใหม่");
         sessionStorage.removeItem("Token");
         navigate(Pagepath.login);
         return;
       }
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (data?.data) {
         navigate(Pagepath.history, {
           state: {
@@ -38,13 +40,15 @@ const GetselfHistory = () => {
           },
         });
       } else {
-        alert("ไม่พบข้อมูลประวัติ");
-        navigate(Pagepath.home)
+        // alert("ไม่พบข้อมูลประวัติ");
+        message.error("ไม่พบข้อมูลประวัติ");
+        navigate(Pagepath.home);
+        return;
       }
     } catch (err) {
       console.error(err);
       alert("เชื่อมต่อเซิร์ฟเวอร์ไม่ได้");
-      navigate(Pagepath.home)
+      navigate(Pagepath.home);
     }
   };
 

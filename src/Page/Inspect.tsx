@@ -98,7 +98,11 @@ const Inspect = () => {
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
-
+      if(response.status == 401 ) {
+        sessionStorage.clear()
+        navigate(Pagepath.login)
+        throw new Error("โปรดเข้าสู่ระบบใหม่")
+      }
       if (!response.ok) throw new Error("การส่งข้อมูลล้มเหลว");
       const data: PredictResponse = await response.json();
 
@@ -134,9 +138,9 @@ const Inspect = () => {
   }, []);
 
   return (
-    // ปรับลด Padding ของ Container หลักบนมือถือให้เป็น 0
+
     <div className="min-h-full sm:pt-4 sm:pb-2 sm:px-2">
-      {loading && loading_state("ระบบกำลังประมวลผลด้วย AI...")}
+      {loading && loading_state("กำลังโหลด")}
 
       <input
         ref={fileRef}
@@ -154,14 +158,10 @@ const Inspect = () => {
         }}
       />
 
-      {/* 
-        ปรับปรุงจุดนี้: 
-        - บนมือถือ (default): w-full (เต็มจอ), rounded-none (ไม่มีมุมโค้ง), border-none, shadow-none 
-        - บนคอม (sm:): max-w-2xl, mx-auto, rounded-3xl, shadow-2xl, border
-      */}
+
       <div className=" mb-0 sm:mb-0 sm:mt-14 w-full sm:max-w-2xl sm:mx-auto bg-white/95 backdrop-blur-sm sm:rounded-3xl sm:shadow-2xl overflow-hidden sm:border border-gray-100 min-h-screen sm:min-h-0">
         
-        {/* Header - บนมือถือให้พื้นหลังเข้มและเต็มขอบ */}
+
         <div className="bg-green-600 p-1  sm:p-4 text-center text-white">
           <h1 className="text-3xl md:text-4xl font-black mb-3">เริ่มการคัดกรอง</h1>
           <p className="opacity-90 font-light text-sm md:text-lg px-2">อัปโหลดภาพถ่ายผิวหนังเพื่อให้ AI วิเคราะห์</p>

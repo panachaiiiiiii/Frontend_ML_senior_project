@@ -14,7 +14,7 @@ interface NavbarProps {
 function Navbar({ loggedIn }: NavbarProps) {
   return (
     // เปลี่ยน w-screen เป็น w-full และเพิ่ม absolute z-50 เพื่อให้ลอยทับรูป
-    <nav className="absolute top-0 left-0 h-16 w-full bg-green-600/80 backdrop-blur-sm text-white py-4 px-6 md:px-20 flex items-center justify-between z-50">
+    <nav className="absolute top-0 left-0 h-16 w-full bg-green-600 backdrop-blur-sm text-white py-4 px-6 md:px-20 flex items-center justify-between z-50">
       <h1>
         <a className="cursor-pointer" href={Page.Pagepath.home}>
           <HomeOutlined className="text-3xl" />

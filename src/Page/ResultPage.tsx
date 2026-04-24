@@ -1,5 +1,6 @@
+import { Pagepath } from ".";
 import RTabbtn from "../Component/btns/ResultsBtn";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // 1. ปรับ Type ให้ตรงกับ State ที่ส่งมา
 type PredictionState = {
@@ -8,6 +9,7 @@ type PredictionState = {
   file: File | string;
 };
 
+
 const ResultPage = () => {
   const location = useLocation();
   
@@ -15,8 +17,11 @@ const ResultPage = () => {
   const { model_name, result, file } = (location.state as PredictionState) || {};
 
   // ตรวจสอบกรณีไม่มีข้อมูล (ป้องกันหน้าขาว)
+  const navigator = useNavigate();
   if (!result) {
-    return <div className="p-10 text-center text-red-500 font-bold">ไม่พบข้อมูลผลการวิเคราะห์</div>;
+    navigator(Pagepath.home)
+    // throw new Error("ไม่พบข้อมูลผลการวิเคราะห์")
+    return <div className="pt-40 p-10 text-center text-red-500 font-bold">ไม่พบข้อมูลผลการวิเคราะห์</div>;
   }
 
   // จัดการรูปภาพ

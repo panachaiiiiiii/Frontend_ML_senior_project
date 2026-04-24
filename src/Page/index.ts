@@ -1,3 +1,4 @@
+
 export { default as Home } from "./Home"
 export { default as Login } from "./Login"
 export { default as Register } from "./Register"
@@ -11,6 +12,10 @@ export { default as GetselfHistory} from"./GetselfHistory"
 export { default as HistoryAdmin} from"./HistoryAdmin"
 export { default as Adminuser} from"./Adminuser"
 export { default as Models} from"./Models"
+export { default as CanncerNews} from"./CancerNews"
+export { default as Precancer} from"./Precancer"
+
+
 
 export const Pagepath = {
   home: "/",
@@ -25,5 +30,8 @@ export const Pagepath = {
   admin: "/admin",
   HistoryAdmin:"/admin/history",
   adminuser: "/admin/user",
-  Models: "/admin/ModelSetting"
+  Models: "/admin/ModelSetting",
+  CanncerNews:"/News",
+  Precancer:"/precancer"
+
 } as const
